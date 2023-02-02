@@ -1,0 +1,57 @@
+DROP DATABASE netflix;
+
+-- CRIACAO DA BASE DE DADOS
+
+CREATE DATABASE if not exists netflix;
+USE netflix;
+
+CREATE TABLE usuario (
+id INT NOT NULL AUTO_INCREMENT,
+usuario VARCHAR(45) NOT NULL,
+nome VARCHAR(45) NOT NULL,
+senha VARCHAR(250) NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE filme (
+id INT NOT NULL AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL,
+descricao TEXT NOT NULL DEFAULT('indisponivel'),
+ano YEAR NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE status (
+id INT NOT NULL AUTO_INCREMENT,
+status VARCHAR(10) NOT NULL DEFAULT('NAO VISTO'),
+observacao VARCHAR(250),
+tempo TIME,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE colecao (
+id INT NOT NULL AUTO_INCREMENT,
+usuario_id INT NOT NULL,
+filme_id INT NOT NULL,
+status_id INT NOT NULL,
+nota DECIMAL(3,1),
+PRIMARY KEY (id),
+FOREIGN KEY (usuario_id) REFERENCES usuario (id),
+FOREIGN KEY (filme_id) REFERENCES filme (id),
+FOREIGN KEY (status_id) REFERENCES status (id)
+);
+
+CREATE TABLE categoria (
+id INT NOT NULL AUTO_INCREMENT,
+categoria VARCHAR(45) NOT NULL,
+PRIMARY KEY (id)
+);
+
+CREATE TABLE filme_categoria (
+id INT NOT NULL AUTO_INCREMENT,
+filme_id INT NOT NULL,
+categoria_id INT NOT NULL,
+PRIMARY KEY (id),
+FOREIGN KEY (filme_id) REFERENCES filme (id),
+FOREIGN KEY (categoria_id) REFERENCES categoria (id)
+);
